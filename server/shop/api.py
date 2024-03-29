@@ -25,11 +25,11 @@ def get_shop(user_id:str= Depends(get_current_user_id)):
 @router.post("/")
 def create_shop(shop: Shop, user_id:str= Depends(get_current_user_id)):
     try:
-        db.collection('shops').document(user_id).set(shop.model_dump())
+        # create new shop with automatic generated id
+        db.collection('shops').add(shop.model_dump())
         return {'message':'Shop created successfully'}
     except Exception as e:
         raise e
-
 
 @router.put("/")
 def update_shop(shop:Shop, user_id:str= Depends(get_current_user_id)):
